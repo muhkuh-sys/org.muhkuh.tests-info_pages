@@ -18,7 +18,6 @@ end
 
 
 function _M:__validateCAL(tAttr, strData)
-  local tLog = self.tLog
   local fIsValid = false
   local strError
 
@@ -115,7 +114,6 @@ end
 
 
 function _M:__validateKIP(tAttr, strData)
-  local tLog = self.tLog
   local fIsValid = false
   local strError
 
@@ -160,7 +158,6 @@ end
 function _M:run()
   local atParameter = self.atParameter
   local tLog = self.tLog
-  local json = self.json
   local pl = self.pl
 
   ----------------------------------------------------------------------
@@ -178,6 +175,7 @@ function _M:run()
   --
   local atPluginOptions = {}
   if strPluginOptions~=nil then
+    local json = require 'dkjson'
     local tJson, uiPos, strJsonErr = json.decode(strPluginOptions)
     if tJson==nil then
       tLog.warning('Ignoring invalid plugin options. Error parsing the JSON: %d %s', uiPos, strJsonErr)

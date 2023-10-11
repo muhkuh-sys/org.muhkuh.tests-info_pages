@@ -144,8 +144,25 @@ function _M:__validateKIP(tAttr, strData)
         strError = 'The GDR_FP field is not valid.'
 
       else
-        fIsValid = true
+        local strGdrCp1 = string.sub(strData, 0x0020+1, 0x0030)
+        local strGdrCp2_0 = string.sub(strData, 0x0030+1, 0x0040)
+        local strGdrCp2_1 = string.sub(strData, 0x0040+1, 0x0050)
+        local strGdrCpGood = string.char(
+          0xAA, 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+        )
+        if strGdrCp1~=strGdrCpGood then
+          strError = 'The GDR_CP1 field is not valid.'
 
+        elseif strGdrCp2_0~=strGdrCpGood then
+          strError = 'The GDR_CP2_0 field is not valid.'
+
+        elseif strGdrCp2_1~=strGdrCpGood then
+          strError = 'The GDR_CP2_1 field is not valid.'
+
+        else
+          fIsValid = true
+        end
       end
     end
   end

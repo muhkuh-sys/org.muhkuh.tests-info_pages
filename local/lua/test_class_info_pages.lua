@@ -11,7 +11,12 @@ function _M:_init(strTestName, uiTestCase, tLogWriter, strLogLevel)
       required(false),
 
     P:P('plugin_options', 'Plugin options as a JSON object.'):
-      required(false)
+      required(false),
+
+    P:SC('dump_always', 'Always dump the info page data to the console. ' ..
+                        'The default is "false" which only dumps the data in case of an error.'):
+      default('false'):
+      constraint('true,false')
   }
 end
 
@@ -183,7 +188,7 @@ function _M:run()
   --
   local strPluginPattern = atParameter['plugin']:get()
   local strPluginOptions = atParameter['plugin_options']:get()
-
+  local bDumpAlways = (atParameter['dump_always']:get() == 'true')
 
   ----------------------------------------------------------------------
   --
@@ -332,10 +337,15 @@ function _M:run()
   -- Always do this even if this test thinks it is OK.
   _G.tester:sendLogEvent('muhkuh.attribute.info_pages', atEventData)
 
-  if fAllPagesAreValid~=true then
+  if bDumpAlways==true or fAllPagesAreValid~=true then
     local json = require 'dkjson'
-    tLog.error('Failed to validate the info pages: %s', json.encode(atEventData))
-    error('Failed to validate the info pages.')
+    tLog.info('Info pages: %s', json.encode(atEventData))
+  end
+
+  if fAllPagesAreValid~=true then
+    local strMessage = 'The info pages are invalid.'
+    tLog.error(strMessage)
+    error(strMessage)
   end
 
   print("")

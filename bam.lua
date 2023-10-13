@@ -20,7 +20,7 @@ local atEnv = require 'mbs'
 --
 
 -- FIXME: The MBS2 system should read this from a setup file.
-atEnv.DEFAULT.atVars.PROJECT_VERSION = { "1", "1", "0" }
+atEnv.DEFAULT.atVars.PROJECT_VERSION = { "1", "2", "0" }
 
 ------------------------------------------------------------------------------
 --

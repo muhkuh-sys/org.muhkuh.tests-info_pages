@@ -1,0 +1,39 @@
+{
+    "additionalProperties" : false,
+    "properties" : {
+        "$schema" : {
+            "type" : "string"
+        },
+        "parameter": {
+            "items" : {
+                "additionalProperties" : false,
+                "properties" : {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "default": {
+                        "type": "string"
+                    },
+                    "required": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                    }
+                },
+                "required" : [
+                    "name",
+                    "description"
+                ],
+                "type" : "object"
+             },
+             "type" : "array"
+        }
+    },
+    "required" : [
+        "$schema",
+        "parameter"
+    ],
+    "type" : "object"
+}

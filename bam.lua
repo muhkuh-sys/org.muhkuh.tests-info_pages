@@ -44,9 +44,10 @@ local atArtifacts =
         ['lua'] = {
           'local/lua/test_class_info_pages.lua'
         },
---        ['parameter'] = {
---          'parameter/org.muhkuh.tests.flash_wfp.flash_wfp.json'
---        },
+        ['doc'] = {
+          'doc/test_flow.gv',
+          'doc/teststep.mustache.asciidoc'
+        },
         ['templates'] = {
           'local/test.lua'
         },

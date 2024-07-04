@@ -1,0 +1,23 @@
+{
+  "$schema" : "./schema/parameter.schema.json",
+
+
+  "parameter": [
+    {
+      "name": "plugin",
+      "description": "A pattern for the plugin to use.",
+      "required": "false"
+    },
+    {
+      "name": "plugin_options",
+      "description": "Plugin options as a JSON object.",
+      "required": "false"
+    },
+    {
+      "name": "dump_always",
+      "description": "Always dump the info page data to the console. The default is 'false' which only dumps the data in case of an error.",
+      "required": "true",
+      "default": "false"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+The "info" and "kip" pages of the netX90 internal flash contain settings, calibration values and chip test results. The chip test results should contain several "Good-Die-Records" which indicate a successful test during the production of the chip.
+
+The "info pages" test step validates all checksums and checks the Good-Die-Records. A device is only marked as "PASSED" if all checksums are valid and all Good-Die-Records are present and marked as "good".
+
+The contents of all pages are emitted as an event, which can be consumed by a database.
+
+# Parameter
+
+The following table shows all parameters for this test step.
+The "value" column shows the assigned value.
+Some parameters have a default value, which is listed in the column "default". If the default value is not overwritten, the "value" column is empty. Furthermore a parameter can be connected to a system parameter or the output of another test step. In this case the value field shows "connected to" with the source of the value.
+
+.List of all parameters
+|===
+| Name        | value | default | description
+
+{{#parameter_list}}
+{{#if}}{{type=='connection'}}| `{{name}}` | connected to `{{value}}` | {{#default}}`{{default}}`{{/default}} | {{description}}{{/if}}
+{{#if}}{{type=='constant'}}| `{{name}}` | `{{value}}` | {{#default}}`{{default}}`{{/default}} | {{description}}{{/if}}
+{{#if}}{{type=='default'}}| `{{name}}` | _see default_ | {{#default}}`{{default}}`{{/default}} | {{description}}{{/if}}
+{{/parameter_list}}
+|===
+
+# Details
+
+The test step reads the following pages:
+
+ * CAL info page
+ * COM info page
+ * APP info page
+ * KIP0
+ * KIP1
+ * KIP2
+
+The following checks are executed on the pages:
+
+## CAL info page
+
+ * The upper and lower half of the page must have the same contents.
+ * The "ROM func mode" cookie must be set.
+ * The CRC32B checksum of the analog parameter block must be valid.
+ * The SHA384 hash of the Ethernet parameter must be valid.
+
+## COM and APP info pages
+
+ * The upper and lower half of the page must have the same contents.
+ * The SHA384 hash of the page must be valid.
+
+## KIP0, KIP1 and KIP2
+
+ * The CRC32B checksum of the Good-Die-Record block must be valid.
+ * The Good-Die-Record block must contain a valid FP record with the result "good".
+ * The Good-Die-Record block must contain a valid CP1 record with the result "good".
+ * The Good-Die-Record block must contain a valid CP2-0 record with the result "good".
+ * The Good-Die-Record block must contain a valid CP2-1 record with the result "good".
+
+Only if all checks were successful, the test step is marked as "PASSED". If one or more checks failed the test step is marked as "FAILED".
